@@ -1,27 +1,37 @@
+
+Crear base de datos mysql, de preferencia que tenga el nombre "polyvacdb"
+
 instalar nodejs version LTS  https://nodejs.org/en
 Una ves instalando nodejs 
-abrir terminal y ejecutar: npm install pm2 pm2-windows-startup -g
+abrir terminal y ejecutar: npm install pm2@latest pm2-windows-startup -g
 
- 
+
 Ubicarse en la raiz de la carpeta polyvac-backend y ejecutar los comandos: 
 
 Importante: En el archivo .env , configurar PUBLIC_URL (la URL pública base que se vaya a usar).
+
+En el archivo .env modificar las credenciales de acceso de la base de datos, EL NOMBRE DE LA BASE DE DATOS debe COINCIDIR con el valor de DATABASE_NAME
+
 Si se desea usar otro puerto para la aplicación interna, se modifica PORT en el archivo ".env".
 --------------------------------------------
 Hacer estos cambios antes de los comandos.
 --------------------------------------------
 Comandos: 
 1. npm install
-2. pm2-startup install
-3. npm run build
-4. pm2 start server.js
-5. pm2 save
+2. npm run develop 
+   (Este paso es para verificar que la aplicación inicie y se conecte correctamente a la base de datos. 
+    Busca un mensaje como "Strapi started successfully". 
+    Una vez verificado, detén el proceso con Ctrl+C en la terminal).
+    Solo si se ve el mensaje de que inicio correctamente correctamente continuar con los comandos
+3. pm2-startup install
+4. npm run build
+5. pm2 start server.js 
+6. pm2 save
 
 
-la aplicación  corre en http://localhost:1337  
+la aplicación escucha en http://localhost:1337
 
-    redirigir http://localhost:1337/admin    ->  https://dominio/admin
-    redirigir http://localhost:1337/api      ->  https://dominio/api
-    redirigir http://localhost:1337/uploads  ->  https://dominio/uploads
-
- 
+    localhost:1337/admin    ->  https://dominio/admin  
+    localhost:1337/api      ->  https://dominio/api
+    localhost:1337/uploads  ->  https://dominio/uploads
+    
