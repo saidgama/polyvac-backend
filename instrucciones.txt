@@ -1,37 +1,40 @@
 
-Crear base de datos mysql, de preferencia que tenga el nombre "polyvacdb"
+1. Crear una base de datos MySQL, de preferencia con el nombre polyvacdb (si se usa otro nombre ponerlo en el archivo .env).
 
-instalar nodejs version LTS  https://nodejs.org/en
-Una ves instalando nodejs 
-abrir terminal y ejecutar: npm install pm2@latest pm2-windows-startup -g
+2. Instalar Node.js versión LTS desde https://nodejs.org/en
 
+3. Una vez instalado Node.js, abrir una terminal y ejecutar:
+   npm install pm2@latest pm2-windows-startup -g
 
-Ubicarse en la raiz de la carpeta polyvac-backend y ejecutar los comandos: 
+4. Ubicarse en la raíz de la carpeta polyvac-backend.
 
-Importante: En el archivo .env , configurar PUBLIC_URL (la URL pública base que se vaya a usar).
+5. Configurar el archivo .env:
+   - Cambiar PUBLIC_URL por la URL pública que se vaya usar para el backend por ejemplo https://polyvac.mx/panel  (la subruta "panel" debe coincidir con la del paso 7)  
+   - Modificar las credenciales de la base de datos. El nombre de la base de datos debe coincidir con DATABASE_NAME.
+   - Si se desea usar otro puerto para la app y la base de datos, cambiarlo tambien.
 
-En el archivo .env modificar las credenciales de acceso de la base de datos, EL NOMBRE DE LA BASE DE DATOS debe COINCIDIR con el valor de DATABASE_NAME
+6. Ejecutar los siguientes comandos (dentro de la raiz de la carpeta y la base de datos ya debe estar creada) en orden uno por uno:
+   1. npm install
 
-Si se desea usar otro puerto para la aplicación interna, se modifica PORT en el archivo ".env".
---------------------------------------------
-Hacer estos cambios antes de los comandos.
---------------------------------------------
-Comandos: 
-1. npm install
-2. npm run develop 
-   (Este paso es para verificar que la aplicación inicie y se conecte correctamente a la base de datos. 
-    Busca un mensaje como "Strapi started successfully". 
-    Una vez verificado, detén el proceso con Ctrl+C en la terminal).
-    Solo si se ve el mensaje de que inicio correctamente correctamente continuar con los comandos
-3. pm2-startup install
-4. npm run build
-5. pm2 start server.js 
-6. pm2 save
+   2. npm run develop 
+      - Verifica que la aplicación inicie y se conecte a la base de datos.
+      - Busca el mensaje "Strapi started successfully".
+      - Si inicia correctamente, detén el proceso con Ctrl+C y seguir con los demas comandos.
 
+   3. pm2-startup install
+   4. npm run build
+   5. pm2 start server.js
+   6. pm2 save
 
-la aplicación escucha en http://localhost:1337
+(PM2 es un gestor de aplicaciones NodeJS para mantenerlas siempre activas y re-ejecutarlas en caso de que el servidor se reinicie)
 
-    localhost:1337/admin    ->  https://dominio/admin  
-    localhost:1337/api      ->  https://dominio/api
-    localhost:1337/uploads  ->  https://dominio/uploads
-    
+7. La aplicación escucha en localhost:1337
+
+ Para que el panel de administracion sea accesible con la url publica se sugiere lo siguiente:
+   - Instala la extensión "URL Rewrite" y "Application Request Routing" en IIS si no la tienes.
+   - En el administrador de IIS selecciona el sitio.
+   - Haz clic en "URL Rewrite".
+   - Haz clic en agregar nueva regla y elige tipo "Reverse Proxy"
+   La direccion a reescribir es localhost:1337, da clic en ok y selecciona la regla y elige editar.
+   **Importante** En el menu de editar, en match URL el pattern debe ser: ^panel/?(.*)  Aplica cambios.   (Debe coincidir con la subruta de el paso 5)
+    Esto hará que todo lo que entre por /panel se redirija al backend que corre en localhost:1337.
