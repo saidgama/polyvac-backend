@@ -1,5 +1,5 @@
 import logo from './extensions/logo.png';
-import favicon from './extensions/favicon.png';
+import favicon from './extensions/favicon.ico';
 
 export default {
   config: {
